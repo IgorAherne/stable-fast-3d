@@ -1,5 +1,6 @@
-A fork with the `libomp140.x86_64.dll`, to resolve a missing pytorch dependency.
+A fork with the `libomp140.x86_64.dll`, and `VC_redist.x64.exe` to resolve a missing pytorch dependency.
 More about this dll [here](https://devblogs.microsoft.com/cppblog/openmp-task-support-for-c-in-visual-studio/)
+More info about MV C++ Redistributable [here](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist)
 
 # SF3D: Stable Fast 3D Mesh Reconstruction with UV-unwrapping and Illumination Disentanglement
 
