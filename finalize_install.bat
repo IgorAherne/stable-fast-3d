@@ -171,12 +171,7 @@ echo Attempting to install pynim...
 
 :: Create a file to indicate successful installation
 echo Installation completed successfully > "install_finalized.txt"
+echo.
 echo Setup complete. You can now use Stable-Fast-3D.
-
-:: Inform the user about the need to restart CMD for PATH changes to take effect
-echo.
-echo NOTE: You may need to restart your command prompt or PowerShell
-echo for the PATH changes to take effect in new sessions.
-echo.
 
 pause
