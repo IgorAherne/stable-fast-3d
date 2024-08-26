@@ -4,7 +4,7 @@ from typing import Any, Dict, Optional
 
 import gpytoolbox
 import numpy as np
-import pynim
+# import pynim  commented out because needs ridiculous Visual Studio install - without it we can't quadrify mesh :(
 import torch
 import torch.nn.functional as F
 import trimesh
@@ -143,29 +143,32 @@ class Mesh:
         quad_smooth_iter: int = 2,
         quad_align_to_boundaries: bool = False,
     ) -> Mesh:
-        v_pos = self.v_pos.detach().cpu().numpy().astype(np.float32)
-        t_pos_idx = self.t_pos_idx.detach().cpu().numpy().astype(np.int32)
+         # Return a new Mesh instance with the same vertices and faces. Because import pynim is commented out above:
+    	return Mesh(self.v_pos.clone(), self.t_pos_idx.clone())
+        
+        #v_pos = self.v_pos.detach().cpu().numpy().astype(np.float32)
+        #t_pos_idx = self.t_pos_idx.detach().cpu().numpy().astype(np.int32)
 
-        new_vert, new_faces = pynim.remesh(
-            v_pos,
-            t_pos_idx,
-            quad_vertex_count // 4,
-            rosy=quad_rosy,
-            posy=4,
-            creaseAngle=quad_crease_angle,
-            align_to_boundaries=quad_align_to_boundaries,
-            smooth_iter=quad_smooth_iter,
-            deterministic=True,
-        )
+        #new_vert, new_faces = pynim.remesh(
+        #    v_pos,
+        #    t_pos_idx,
+        #    quad_vertex_count // 4,
+        #    rosy=quad_rosy,
+        #    posy=4,
+        #    creaseAngle=quad_crease_angle,
+        #    align_to_boundaries=quad_align_to_boundaries,
+        #    smooth_iter=quad_smooth_iter,
+        #    deterministic=True,
+        #)
 
-        # Briefly load in trimesh
-        mesh = trimesh.Trimesh(vertices=new_vert, faces=new_faces)
+        ## Briefly load in trimesh
+        #mesh = trimesh.Trimesh(vertices=new_vert, faces=new_faces)
 
-        v_pos = torch.from_numpy(mesh.vertices).to(self.v_pos).contiguous()
-        t_pos_idx = torch.from_numpy(mesh.faces).to(self.t_pos_idx).contiguous()
+        #v_pos = torch.from_numpy(mesh.vertices).to(self.v_pos).contiguous()
+        #t_pos_idx = torch.from_numpy(mesh.faces).to(self.t_pos_idx).contiguous()
 
-        # Create new mesh
-        return Mesh(v_pos, t_pos_idx)
+        ## Create new mesh
+        #return Mesh(v_pos, t_pos_idx)
 
     def triangle_remesh(
         self,
