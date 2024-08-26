@@ -126,10 +126,6 @@ set "PYTHON=!SF3D_DIR!venv\Scripts\python.exe"
 echo Upgrading pip in the virtual environment...
 "!PYTHON!" -m pip install --upgrade pip
 
-:: List installed packages
-echo Listing installed packages...
-"!PYTHON!" -m pip list
-
 :: Update setuptools
 echo Updating setuptools...
 "!PYTHON!" -m pip install -U setuptools==69.5.1
@@ -143,31 +139,11 @@ if !errorlevel! neq 0 (
     exit /b 1
 )
 
-:: Verify PyTorch installation
-"!PYTHON!" -c "import torch; print(f'PyTorch version: {torch.__version__}')"
-if !errorlevel! neq 0 (
-    echo PyTorch import failed. Error code: !errorlevel!
-    pause
-    exit /b 1
-)
-
-:: Check CUDA availability
-"!PYTHON!" -c "import torch; print(f'CUDA available: {torch.cuda.is_available()}')"
-if !errorlevel! neq 0 (
-    echo CUDA availability check failed. Error code: !errorlevel!
-    pause
-    exit /b 1
-)
-
 :: Install other requirements
 echo Installing other requirements...
 "!PYTHON!" -m pip install -r requirements.txt
-"!PYTHON!" -m pip install -r requirements-demo.txt
 "!PYTHON!" -m pip install -U "huggingface_hub[cli]"
 
-:: Try to install pynim with no build isolation
-echo Attempting to install pynim...
-"!PYTHON!" -m pip install pynim --no-build-isolation
 
 :: Create a file to indicate successful installation
 echo Installation completed successfully > "install_finalized.txt"
